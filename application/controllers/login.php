@@ -53,7 +53,7 @@ class Login extends My_Controller
             // }
 
         } else {
-            $this->load->view('login/registration');
+            $this->load->view('admin/registration');
         }
     }
 }

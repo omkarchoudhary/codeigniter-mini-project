@@ -29,8 +29,6 @@ public function articleList($limit, $offset){
     ->where(['user_id'=>$id])
     ->limit($limit, $offset)
     ->get();
-    //last_query for echo query
-    // echo "<pre>";print_r($sql->result());exit;
     return $sql->result();
 }
 
@@ -79,5 +77,3 @@ public function deleteArticle($id){
 }
 
 }
-
-?>

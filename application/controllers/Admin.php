@@ -32,7 +32,7 @@ class Admin extends My_Controller
 
         //If user direct hit url and cookiee set then not go to login page
         if ($this->session->userdata('id')) {
-            return redirect('admin/welcome');
+            return redirect('admin/index');
         }
 
         //Set validations for form fields
@@ -87,11 +87,6 @@ class Admin extends My_Controller
         $this->pagination->initialize($config);
         $arrArticles = $this->lm->articleList($config['per_page'], $this->uri->segment(3));
         $this->load->view('admin/index', ['arrArticles' => $arrArticles]);
-    }
-
-    public function registration()
-    {
-        $this->load->view('Admin/registration');
     }
 
     /**
