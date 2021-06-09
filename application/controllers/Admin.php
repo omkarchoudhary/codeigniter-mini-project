@@ -1,5 +1,7 @@
 <?php
-class Admin extends My_Controller
+
+
+class Admin extends CI_Controller
 {
 
     //Points
@@ -83,9 +85,28 @@ class Admin extends My_Controller
                 'base_url' => base_url('index.php/admin/index'),
                 'per_page' => 2,
                 'total_rows' => $this->lm->numrows(),
+                'full_tag_open'=>"<ul class='pagination'>",
+                'full_tag_close'=>"</ul>",
+                'next_tag_open' =>"<li class='page-item'>",
+                'next_tag_close' =>"</li>",
+                'prev_tag_open' =>"<li class='page-item'>",
+                'prev_tag_close' =>"</li>",
+                'num_tag_open' =>"<li class='page-item'>",
+                'num_tag_close' =>"<li>",
+                'cur_tag_open' =>"<li class='active page-item'><a class='page-link'>",
+                'cur_tag_close' =>"</a></li>"
             ];
         $this->pagination->initialize($config);
         $arrArticles = $this->lm->articleList($config['per_page'], $this->uri->segment(3));
+        //  $this->load->model('loginmodel','lm');
+        //  $users = new \App\Models\login_model();
+        //  $articles = $this->lm->articleList();
+
+        // $arrArticles = [
+        //     'users' => $articles->paginate(10),
+        //     'pager' => $articles->pager,
+        // ];
+
         $this->load->view('admin/index', ['arrArticles' => $arrArticles]);
     }
 
@@ -111,8 +132,17 @@ class Admin extends My_Controller
 
     public function addArticle()
     {
-        if ($this->form_validation->run('add_article_rules')) {
+        // $config = [
+        //     'upload_path' => 'http://localhost/codeIgniter/upload/',
+        //    // 'allowed_types' => 'gif|jpg|png',
+        // ];
+        // $this->load->library('upload', $config);
+        // if ($this->form_validation->run('add_article_rules') && $this->upload->do_upload()) {
+            if ($this->form_validation->run('add_article_rules')){
             $post = $this->input->post();
+            //$imageData = $this->upload->data();
+            //$imagePath = base_url('upload/'.$imageData['raw_name'].$imageData['file_ext']);
+            //$post['image_path'] = $imagePath;
             $this->load->model('loginmodel', 'userAdd');
             if ($this->userAdd->addArticle($post)) {
                 $this->session->set_flashdata('Add_Article_Success', 'Artcile has been added successfully.');
@@ -124,7 +154,9 @@ class Admin extends My_Controller
                 echo "not add";
             }
         } else {
+           //$upload_error=$this->upload->display_errors();
            // $this->session->set_flashdata('Add_Article_Success', 'Please enter valid data.');
+            //$this->load->view('admin/add_article', compact('upload_error'));
             $this->load->view('admin/add_article');
         }
     }

@@ -32,6 +32,15 @@ public function articleList($limit, $offset){
     return $sql->result();
 }
 
+// public function articleList(){
+//     $id = $this->session->userdata('id');
+//     $sql = $this->db->select()
+//     ->from('article')
+//     ->where(['user_id'=>$id])
+//     ->get();
+//     return $sql->result();
+// }
+
 public function editArticle($id){
     $sql = $this->db->select(['article_title','article_body'])
     ->from('article')

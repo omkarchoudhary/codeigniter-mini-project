@@ -6,7 +6,9 @@ include('header.php'); ?>
   <div class="container" style="margin-top:40px;margin-bottom:40px;">
     <div class="row">
       <div class="col-md-6">
-        <h1>Articles List</h1>
+        <h1><?php
+            // echo "<pre>";print_r($data['title']);exit;
+        echo !empty($data['title']) ? $data['title']: "";?></h1>
       </div>
       <div class="col-md-6">
         <a href=<?php echo base_url('index.php/admin/addarticle');?> class="btn btn-lg">Add Article</a>
@@ -29,28 +31,23 @@ include('header.php'); ?>
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Article Title</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Feebback1</th>
           </tr>
         </thead>
         <tbody>
           <?php
-          if (!empty($arrArticles)) :
+          if (!empty($data['feedbackInfo'])) :
             $count = 0;
-            $count = $this->uri->segment(3);
-            foreach ($arrArticles as $recValue) :
+            foreach ($data['feedbackInfo'] as $recValue) :
               $count++;
           ?>
               <tr>
                 <th scope="row"><?php echo $count; ?></th>
-                <td><?php echo !empty($recValue->article_title) ? $recValue->article_title : ""; ?></td>
-                <td><a href=<?php echo base_url('index.php/admin/editarticle/'.$recValue->id.'');?> class="btn">Edit</td>
-                <td> <?=
-                      form_open('admin/deletearticle'),
-                      form_hidden('id', $recValue->id),
-                      form_submit(['type' => 'submit', 'value' => 'Delete', 'class' => 'btn']);
-                      ?> </td>
+                <td><?php echo !empty($recValue->name) ? $recValue->name : ""; ?></td>
+                <td><?php echo !empty($recValue->email) ? $recValue->email : ""; ?></td>
+                <td><?php echo !empty($recValue->feedback1) ? $recValue->feedback1 : ""; ?></td>
               </tr>
             <?php
             endforeach;
@@ -64,17 +61,21 @@ include('header.php'); ?>
                 endif;
                   ?>
         </tbody>
-        <?= $this->pagination->create_links(); ?>
+        <?php //$this->pagination->create_links(); ?>
       </table>
-      <!-- <ul class="pagination">
+      <ul class="pagination">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         <li class="page-item"><a class="page-link" href="#">1</a></li>
         <li class="page-item"><a class="page-link" href="#">2</a></li>
         <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul> -->
+      </ul>
     </div>
-  </div>
+    <form method="post" action="<?php echo base_url();?>index.php/export/createXLS">
+    <?php
+  echo form_submit(['type' => 'submit', 'class' => 'btn btn-primary', 'value' => 'Export']);
+  ?>
+    </form> 
 </body>
 
 </html>

@@ -17,6 +17,7 @@ include('header.php');
   }
   ?>
   <?php
+  //echo form_open_multipart('admin/addarticle');
   echo form_open('admin/addarticle');
   echo form_hidden('user_id', $this->session->userdata('id'));
   ?>
@@ -47,6 +48,18 @@ include('header.php');
       <?php echo form_error('article_body'); ?>
     </div>
   </div>
+  <!-- <div class="row">
+ <div class="col-lg-6">
+  <div class="form-group">
+    <label for="body">Select Image</label>
+  
+   <?php // echo form_upload(['name'=>'image_path']); ?>
+   </div>
+   </div>
+   <div class="col-lg-6" style="margin-top:40px;">
+   <?php if(isset($upload_error)) { echo $upload_error;  }  ?>
+  </div>
+  </div> -->
   <?php
   echo form_submit(['type' => 'submit', 'class' => 'btn', 'value' => 'Submit']);
   echo form_reset(['type' => 'reset', 'class' => 'btn', 'value' => 'Reset']);
