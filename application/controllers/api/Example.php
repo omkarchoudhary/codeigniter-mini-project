@@ -21,6 +21,7 @@ class Example extends REST_Controller {
 
     public function user_post(){
         $users = $this->input->post();
+        if(!empty($users)){
         $affected_rows = $this->db->insert('users',$users);
         if(!empty($affected_rows)){
             $this->response(['User created successfully.'], REST_Controller::HTTP_OK);
@@ -29,11 +30,15 @@ class Example extends REST_Controller {
             $this->response(['status'=>FALSE,'mesage'=>'No user found.'], REST_Controller::HTTP_NOT_FOUND);
         }
     }
+    }
 
     public function user_put($id = 0){
         $input = $this->put();
-        $this->db->update('users',$input, ['id'=>$id]);
+        if(!empty($input)){
+            // echo "<pre>";print_r($input['id']);exit;
+            $this->db->update('users',$input, ['id'=>$input['id']]);
             $this->response(['User updated successfully.'], REST_Controller::HTTP_OK);
+        }
     }
 
     public function user_delete($id = 0)
